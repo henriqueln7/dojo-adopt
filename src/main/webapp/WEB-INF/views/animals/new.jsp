@@ -1,4 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html lang="pt-BR">
 <head>
@@ -11,40 +14,38 @@
 <body>
     <h3>Cadastro de Animal</h3>
 
-    <form method="POST" action="/animals">
+    <form:form modelAttribute="createAnimalForm" method="POST" action="/animals">
         <label>
             Nome do animal
-            <input type="text" name="name" required />
+            <form:input type="text" path="name" required="required" />
+            <form:errors path="name" cssStyle="color: red"/>
         </label>
         <label>
             Custo mensal (R$)
-            <input type="number" name="monthlyCost" required min="10" />
+            <form:input type="number" path="monthlyCost" required="required" min="10" />
+            <form:errors path="monthlyCost" cssStyle="color: red"/>
         </label>
         <label>
             Data de nascimento
-            <input type="date" name="birthday" required />
+            <form:input type="date" path="birthday" required="required" />
+            <form:errors path="birthday" cssStyle="color: red"/>
         </label>
         <label>
             Tipo do animal
-            <select name="animalKind">
-                <c:forEach items="${animalKinds}" var="animalKind">
-                    <option value="${animalKind}">${animalKind.displayName}</option>
-                </c:forEach>
-            </select>
+            <form:select path="animalKind" items="${animalKinds}" itemLabel="displayName" />
+            <form:errors path="animalKind" cssStyle="color: red"/>
         </label>
         <label>
             Tamanho do animal
-            <select name="animalSize">
-                <c:forEach items="${animalSizes}" var="animalSize">
-                    <option value="${animalSize}">${animalSize.displayName}</option>
-                </c:forEach>
-            </select>
+            <form:select path="animalSize" items="${animalSizes}" itemLabel="displayName" />
+            <form:errors path="animalSize" cssStyle="color: red"/>
         </label>
         <label>
             Foto do animal (URL)
             <input type="url" name="photoUrl" required />
+            <form:errors path="photoUrl" cssStyle="color: red"/>
         </label>
         <input type="submit" value="Criar novo animal " />
-    </form>
+    </form:form>
 </body>
 </html>

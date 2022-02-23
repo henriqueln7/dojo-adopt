@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import static javax.persistence.EnumType.STRING;
 
@@ -45,4 +46,29 @@ public class Animal {
         this.animalSize = animalSize;
         this.photoUrl = photoUrl;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public AnimalKind getAnimalKind() {
+        return animalKind;
+    }
+
+    public AnimalSize getAnimalSize() {
+        return animalSize;
+    }
+
+    public int getAgeInYears() {
+        return (int) ChronoUnit.YEARS.between(this.birthday, LocalDate.now());
+    }
+
 }
