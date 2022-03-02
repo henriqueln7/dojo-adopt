@@ -1,4 +1,4 @@
-package br.com.alura.dojoadopt;
+package br.com.alura.dojoadopt.animal;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

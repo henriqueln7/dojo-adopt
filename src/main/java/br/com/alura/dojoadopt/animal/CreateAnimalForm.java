@@ -1,4 +1,4 @@
-package br.com.alura.dojoadopt;
+package br.com.alura.dojoadopt.animal;
 
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;

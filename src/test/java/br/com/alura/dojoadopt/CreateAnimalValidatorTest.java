@@ -1,8 +1,7 @@
 package br.com.alura.dojoadopt;
 
-import org.assertj.core.api.Assertions;
+import br.com.alura.dojoadopt.animal.*;
 import org.junit.jupiter.api.*;
-import org.mockito.Mockito;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
@@ -10,11 +9,11 @@ import org.springframework.validation.Errors;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static br.com.alura.dojoadopt.AnimalKind.*;
-import static br.com.alura.dojoadopt.AnimalSize.*;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static br.com.alura.dojoadopt.animal.AnimalKind.FISH;
+import static br.com.alura.dojoadopt.animal.AnimalSize.MEDIUM;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class CreateAnimalValidatorTest {
 
@@ -37,7 +36,8 @@ class CreateAnimalValidatorTest {
 
         validator.validate(form, errors);
 
-        assertThat(errors.getGlobalErrors()).extracting(DefaultMessageSourceResolvable::getCode).containsExactly("createAnimalForm.name.and.type.already.exists");
+        assertThat(errors.getGlobalErrors()).extracting(DefaultMessageSourceResolvable::getCode)
+                                            .containsExactly("createAnimalForm.name.and.type.already.exists");
     }
 
     @Test

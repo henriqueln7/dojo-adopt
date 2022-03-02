@@ -1,4 +1,4 @@
-package br.com.alura.dojoadopt;
+package br.com.alura.dojoadopt.animal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
