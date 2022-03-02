@@ -3,8 +3,8 @@ package br.com.alura.dojoadopt;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -13,9 +13,17 @@ import java.util.List;
 public class AnimalController {
 
     private final AnimalRepository animalRepository;
+    private final CreateAnimalValidator createAnimalValidator;
 
-    public AnimalController(AnimalRepository animalRepository) {
+    public AnimalController(AnimalRepository animalRepository,
+                            CreateAnimalValidator createAnimalValidator) {
         this.animalRepository = animalRepository;
+        this.createAnimalValidator = createAnimalValidator;
+    }
+
+    @InitBinder("createAnimalForm")
+    public void init(WebDataBinder binder) {
+        binder.addValidators(createAnimalValidator);
     }
 
     @GetMapping("/animals/new")
@@ -33,7 +41,7 @@ public class AnimalController {
         }
         Animal animal = form.toModel();
         animalRepository.save(animal);
-        return "redirect:/animals/new";
+        return "redirect:/animals/";
     }
 
     @GetMapping("/animals")

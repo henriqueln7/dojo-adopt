@@ -36,5 +36,7 @@
         </tbody>
     </table>
 
+    <a href="/animals/new">Cadastrar novo animal</a>
+
 </body>
 </html>

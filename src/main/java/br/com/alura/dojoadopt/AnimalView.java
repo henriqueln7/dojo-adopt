@@ -17,4 +17,28 @@ public class AnimalView {
         ageInYears = animal.getAgeInYears();
         photoUrl = animal.getPhotoUrl();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public int getAgeInYears() {
+        return ageInYears;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

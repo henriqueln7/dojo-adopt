@@ -15,6 +15,7 @@
     <h3>Cadastro de Animal</h3>
 
     <form:form modelAttribute="createAnimalForm" method="POST" action="/animals">
+        <form:errors  cssStyle="color: red"/>
         <label>
             Nome do animal
             <form:input type="text" path="name" required="required" />
