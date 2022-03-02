@@ -3,8 +3,8 @@ package br.com.alura.dojoadopt.owner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -12,9 +12,17 @@ import javax.validation.Valid;
 public class OwnerController {
 
     private final OwnerRepository ownerRepository;
+    private final CreateOwnerValidator createOwnerValidator;
 
-    public OwnerController(OwnerRepository ownerRepository) {
+    public OwnerController(OwnerRepository ownerRepository,
+                           CreateOwnerValidator createOwnerValidator) {
         this.ownerRepository = ownerRepository;
+        this.createOwnerValidator = createOwnerValidator;
+    }
+
+    @InitBinder
+    public void init(WebDataBinder binder) {
+        binder.addValidators(createOwnerValidator);
     }
 
     @GetMapping("/owners/new")

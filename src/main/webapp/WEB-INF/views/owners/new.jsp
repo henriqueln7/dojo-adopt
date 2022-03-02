@@ -28,7 +28,7 @@
     </label>
     <label>
         CPF
-        <input type="text" name="cpf" required="required" />
+        <form:input type="text" path="cpf" required="required" />
         <form:errors path="cpf" cssStyle="color: red"/>
     </label>
     <label>
