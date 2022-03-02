@@ -23,12 +23,12 @@
     </label>
     <label>
         Remuneração (R$)
-        <form:input type="number" path="remuneration" required="required" />
+        <form:input type="number" path="remuneration" required="required" min="0" />
         <form:errors path="remuneration" cssStyle="color: red"/>
     </label>
     <label>
         CPF
-        <input type="text" name="cpf" required />
+        <input type="text" name="cpf" required="required" />
         <form:errors path="cpf" cssStyle="color: red"/>
     </label>
     <label>
@@ -36,11 +36,16 @@
         <form:input type="date" path="birthday" required="required" />
         <form:errors path="birthday" cssStyle="color: red"/>
     </label>
-<%--    <label>--%>
-<%--        Tipo do animal--%>
-<%--        <form:select path="animalKind" items="${animalKinds}" itemLabel="displayName" />--%>
-<%--        <form:errors path="animalKind" cssStyle="color: red"/>--%>
-<%--    </label>--%>
+    <label>
+        Tipo de moradia
+        <form:select path="homeKind" items="${homeKinds}" itemLabel="displayName" />
+        <form:errors path="homeKind" cssStyle="color: red"/>
+    </label>
+    <label>
+        Foto (URL)
+        <form:input type="url" path="photoUrl" required="required" />
+        <form:errors path="photoUrl" cssStyle="color: red"/>
+    </label>
 
     <input type="submit" value="Criar novo animal " />
 </form:form>
