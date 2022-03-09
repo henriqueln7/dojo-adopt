@@ -8,7 +8,8 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     boolean existsByNameAndAnimalKind(String name, AnimalKind kind);
 
     default List<Animal> allThatCanBeAdopted() {
-        //TODO Implementar lógica
-        return findAll();
+        return findAllByOwnerIsNull();
     }
+
+    List<Animal> findAllByOwnerIsNull();
 }

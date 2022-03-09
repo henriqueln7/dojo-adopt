@@ -38,6 +38,7 @@ public class Animal {
     @Nullable
     private Owner owner;
 
+    @FutureOrPresent
     @Nullable
     private LocalDateTime adoptedAt;
 
@@ -82,8 +83,13 @@ public class Animal {
         return (int) ChronoUnit.YEARS.between(this.birthday, LocalDate.now());
     }
 
+    public BigDecimal getMonthlyCost() {
+        return monthlyCost;
+    }
+
     public void beAdoptedBy(Owner owner) {
         Assert.isNull(this.owner, "Animal já foi adotado");
+        Assert.isTrue(owner.canSupport(this), "O tutor não pode sustentar esse animal");
         Assert.notNull(owner, "Owner é nulo grrrr");
 
         this.owner = owner;

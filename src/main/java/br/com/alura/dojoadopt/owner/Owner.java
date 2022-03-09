@@ -69,4 +69,9 @@ public class Owner {
     public String getName() {
         return name;
     }
+
+    public boolean canSupport(Animal animal) {
+        //TODO Aqui não teria que ver para todos os animais? :thinking:
+        return this.remuneration.compareTo(animal.getMonthlyCost()) >= 0;
+    }
 }

@@ -22,38 +22,47 @@
 
 <h3>Animais disponíveis para adoção</h3>
 
-<table>
-    <thead>
-    <tr>
-        <td>Foto</td>
-        <td>ID</td>
-        <td>Nome</td>
-        <td>Porte</td>
-        <td>Tipo</td>
-        <td>Idade</td>
-        <td></td>
-    </tr>
-    </thead>
-    <tbody>
-    <c:forEach items="${animalsThatCanBeAdopted}" var="animal">
+<c:if test="${empty animalsThatCanBeAdopted}">
+    <p>
+        No momento não existem animais disponíveis para serem adotados =)
+        Mas entre na nossa <a href="#">lista de espera</a>
+    </p>
+</c:if>
+<c:if test="${not empty animalsThatCanBeAdopted}">
+    <table>
+        <thead>
         <tr>
-            <td> <img src="${animal.photoUrl}" style="object-fit: contain" width="100px" height="100px" alt="Imagem do animal" /> </td>
-            <td>${animal.id}</td>
-            <td>${animal.name}</td>
-            <td>${animal.size}</td>
-            <td>${animal.kind}</td>
-            <td>${animal.ageInYears}</td>
-            <td>
-                <form action="/adoptions" method="POST">
-                    <input type="hidden" name="ownerId" value="${owner.id()}">
-                    <input type="hidden" name="animalId" value="${animal.id}">
-                    <button type="submit">Adotar</button>
-                </form>
-            </td>
+            <td>Foto</td>
+            <td>ID</td>
+            <td>Nome</td>
+            <td>Porte</td>
+            <td>Tipo</td>
+            <td>Idade</td>
+            <td></td>
         </tr>
-    </c:forEach>
+        </thead>
+        <tbody>
+        <c:forEach items="${animalsThatCanBeAdopted}" var="animal">
+            <tr>
+                <td> <img src="${animal.photoUrl}" style="object-fit: contain" width="100px" height="100px" alt="Imagem do animal" /> </td>
+                <td>${animal.id}</td>
+                <td>${animal.name}</td>
+                <td>${animal.size}</td>
+                <td>${animal.kind}</td>
+                <td>${animal.ageInYears}</td>
+                <td>
+                    <form action="/adoptions" method="POST">
+                        <input type="hidden" name="ownerId" value="${owner.id()}">
+                        <input type="hidden" name="animalId" value="${animal.id}">
+                        <button type="submit">Adotar</button>
+                    </form>
+                </td>
+            </tr>
+        </c:forEach>
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</c:if>
+
 </body>
 </html>
