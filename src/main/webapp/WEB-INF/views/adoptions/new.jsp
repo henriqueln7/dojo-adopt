@@ -15,47 +15,39 @@
 <h3>Nova adoção</h3>
 
 <section class="owner-information">
-    <img src="${owner.photoUrl}" width="150px" height="150px" alt="Foto do tutor ${owner.name}" />
-    <h3>Nome: ${owner.name}</h3>
-    <p><strong>CPF: </strong> ${owner.cpf}</p>
+    <img src="${owner.photoUrl()}" width="150px" height="150px" alt="Foto do tutor ${owner.name()}" />
+    <h3>Nome: ${owner.name()}</h3>
+    <p><strong>CPF: </strong> ${owner.cpf()}</p>
 </section>
 
 <h3>Animais disponíveis para adoção</h3>
 
-<%--<form:form modelAttribute="createOwnerForm" method="POST" action="/owners">--%>
-<%--    <form:errors  cssStyle="color: red"/>--%>
-<%--    <label>--%>
-<%--        Nome do tutor--%>
-<%--        <form:input type="text" path="name" required="required" />--%>
-<%--        <form:errors path="name" cssStyle="color: red"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        Remuneração (R$)--%>
-<%--        <form:input type="number" path="remuneration" required="required" min="0" />--%>
-<%--        <form:errors path="remuneration" cssStyle="color: red"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        CPF--%>
-<%--        <form:input type="text" path="cpf" required="required" />--%>
-<%--        <form:errors path="cpf" cssStyle="color: red"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        Data de nascimento--%>
-<%--        <form:input type="date" path="birthday" required="required" />--%>
-<%--        <form:errors path="birthday" cssStyle="color: red"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        Tipo de moradia--%>
-<%--        <form:select path="homeKind" items="${homeKinds}" itemLabel="displayName" />--%>
-<%--        <form:errors path="homeKind" cssStyle="color: red"/>--%>
-<%--    </label>--%>
-<%--    <label>--%>
-<%--        Foto (URL)--%>
-<%--        <form:input type="url" path="photoUrl" required="required" />--%>
-<%--        <form:errors path="photoUrl" cssStyle="color: red"/>--%>
-<%--    </label>--%>
+<table>
+    <thead>
+    <tr>
+        <td>Foto</td>
+        <td>ID</td>
+        <td>Nome</td>
+        <td>Porte</td>
+        <td>Tipo</td>
+        <td>Idade</td>
+        <td></td>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${animalsThatCanBeAdopted}" var="animal">
+        <tr>
+            <td> <img src="${animal.photoUrl}" style="object-fit: contain" width="100px" height="100px" alt="Imagem do animal" /> </td>
+            <td>${animal.id}</td>
+            <td>${animal.name}</td>
+            <td>${animal.size}</td>
+            <td>${animal.kind}</td>
+            <td>${animal.ageInYears}</td>
+            <td><a href="#">Adotar</a></td>
+        </tr>
+    </c:forEach>
 
-<%--    <input type="submit" value="Criar novo tutor " />--%>
-<%--</form:form>--%>
+    </tbody>
+</table>
 </body>
 </html>

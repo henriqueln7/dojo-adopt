@@ -1,5 +1,7 @@
 package br.com.alura.dojoadopt.owner;
 
+import br.com.alura.dojoadopt.animal.AnimalRepository;
+import br.com.alura.dojoadopt.animal.AnimalView;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +17,12 @@ import java.util.List;
 public class OwnerController {
 
     private final OwnerRepository ownerRepository;
+    private final AnimalRepository animalRepository;
     private final CreateOwnerValidator createOwnerValidator;
 
-    public OwnerController(OwnerRepository ownerRepository,
-                           CreateOwnerValidator createOwnerValidator) {
+    public OwnerController(OwnerRepository ownerRepository, AnimalRepository animalRepository, CreateOwnerValidator createOwnerValidator) {
         this.ownerRepository = ownerRepository;
+        this.animalRepository = animalRepository;
         this.createOwnerValidator = createOwnerValidator;
     }
 
@@ -56,7 +59,9 @@ public class OwnerController {
         Owner owner = ownerRepository.findById(ownerId)
                                      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        model.addAttribute("owner", owner); //TODO Mover isso para uma classe view
+        model.addAttribute("owner", new OwnerView(owner));
+        model.addAttribute("animalsThatCanBeAdopted", animalRepository.allThatCanBeAdopted().stream().map(AnimalView::new).toList());
+
         return "adoptions/new";
     }
 }
