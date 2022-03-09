@@ -15,17 +15,24 @@ public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank @Size(max = 100)
     private String name;
+
     @NotBlank @CPF
+    @Column(unique = true)
     private String cpf;
+
     @PastOrPresent @NotNull
     private LocalDate birthday;
+
     @NotNull @Positive
     private BigDecimal remuneration;
+
     @NotNull
     @Enumerated(STRING)
     private HomeKind homeKind;
+
     @NotBlank @URL
     private String photoUrl;
 
@@ -44,5 +51,21 @@ public class Owner {
         this.remuneration = remuneration;
         this.homeKind = homeKind;
         this.photoUrl = photoUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public String getName() {
+        return name;
     }
 }

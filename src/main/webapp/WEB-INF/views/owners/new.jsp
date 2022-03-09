@@ -47,7 +47,7 @@
         <form:errors path="photoUrl" cssStyle="color: red"/>
     </label>
 
-    <input type="submit" value="Criar novo animal " />
+    <input type="submit" value="Criar novo tutor " />
 </form:form>
 </body>
 </html>

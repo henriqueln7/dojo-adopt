@@ -7,6 +7,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class OwnerController {
@@ -38,6 +39,13 @@ public class OwnerController {
         }
         Owner newOwner = form.toModel();
         ownerRepository.save(newOwner);
-        return "redirect:/owners/new";
+        return "redirect:/owners/";
+    }
+
+    @GetMapping("/owners")
+    public String listOwners(Model model) {
+        List<OwnerView> ownersView = ownerRepository.findAll().stream().map(OwnerView::new).toList();
+        model.addAttribute("ownersView", ownersView);
+        return "owners/list";
     }
 }
