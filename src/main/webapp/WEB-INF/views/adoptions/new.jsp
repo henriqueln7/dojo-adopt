@@ -43,7 +43,13 @@
             <td>${animal.size}</td>
             <td>${animal.kind}</td>
             <td>${animal.ageInYears}</td>
-            <td><a href="#">Adotar</a></td>
+            <td>
+                <form action="/adoptions" method="POST">
+                    <input type="hidden" name="ownerId" value="${owner.id()}">
+                    <input type="hidden" name="animalId" value="${animal.id}">
+                    <button type="submit">Adotar</button>
+                </form>
+            </td>
         </tr>
     </c:forEach>
 

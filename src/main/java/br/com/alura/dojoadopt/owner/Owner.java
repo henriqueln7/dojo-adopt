@@ -1,5 +1,6 @@
 package br.com.alura.dojoadopt.owner;
 
+import br.com.alura.dojoadopt.animal.Animal;
 import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.br.CPF;
 

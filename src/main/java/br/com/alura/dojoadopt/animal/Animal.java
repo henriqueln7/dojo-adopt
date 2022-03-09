@@ -1,11 +1,15 @@
 package br.com.alura.dojoadopt.animal;
 
+import br.com.alura.dojoadopt.owner.Owner;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.lang.Nullable;
+import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import static javax.persistence.EnumType.STRING;
@@ -29,6 +33,13 @@ public class Animal {
     private AnimalSize animalSize;
     @NotBlank @URL
     private String photoUrl;
+
+    @ManyToOne
+    @Nullable
+    private Owner owner;
+
+    @Nullable
+    private LocalDateTime adoptedAt;
 
     @Deprecated
     protected Animal(){}
@@ -71,4 +82,11 @@ public class Animal {
         return (int) ChronoUnit.YEARS.between(this.birthday, LocalDate.now());
     }
 
+    public void beAdoptedBy(Owner owner) {
+        Assert.isNull(this.owner, "Animal já foi adotado");
+        Assert.notNull(owner, "Owner é nulo grrrr");
+
+        this.owner = owner;
+        this.adoptedAt = LocalDateTime.now();
+    }
 }
