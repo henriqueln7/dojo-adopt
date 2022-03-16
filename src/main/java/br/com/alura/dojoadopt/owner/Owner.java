@@ -8,8 +8,10 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
-import static javax.persistence.EnumType.*;
+import static javax.persistence.EnumType.STRING;
 
 @Entity
 public class Owner {
@@ -36,6 +38,9 @@ public class Owner {
 
     @NotBlank @URL
     private String photoUrl;
+
+    @OneToMany(mappedBy = "owner")
+    private List<Animal> animals = new ArrayList<>();
 
     @Deprecated
     protected Owner(){}
@@ -71,7 +76,10 @@ public class Owner {
     }
 
     public boolean canSupport(Animal animal) {
-        //TODO Aqui não teria que ver para todos os animais? :thinking:
-        return this.remuneration.compareTo(animal.getMonthlyCost()) >= 0;
+        BigDecimal moneySpentEveryMonthWithAnimals = this.animals.stream()
+                                                                 .map(Animal::getMonthlyCost)
+                                                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal moneyAvailableToAdoptNewAnimal = this.remuneration.subtract(moneySpentEveryMonthWithAnimals);
+        return moneyAvailableToAdoptNewAnimal.compareTo(animal.getMonthlyCost()) >= 0;
     }
 }
