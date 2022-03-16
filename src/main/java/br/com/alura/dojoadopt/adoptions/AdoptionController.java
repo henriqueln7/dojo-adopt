@@ -31,6 +31,7 @@ public class AdoptionController {
 
         if (!couldBeAdopted) {
             redirectAttributes.addFlashAttribute("adoptError", "Puts cara você não tem grana pra sustentar o bicho!!!!");
+            return "redirect:/owners/" + owner.getId() + "/adoptions/new";
         }
 
         redirectAttributes.addFlashAttribute("adoptSuccess", "Que coisa maravilinda! O animal " + animal.getName() + " foi adotado com sucesso");

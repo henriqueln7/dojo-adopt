@@ -13,6 +13,7 @@
 <body>
 
 <c:if test="${adoptSuccess}">
+<%--    TODO Não tá funcionando--%>
     <p style="color: green">${adoptSuccess}</p>
 </c:if>
 

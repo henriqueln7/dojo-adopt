@@ -18,6 +18,7 @@
                 <td>Nome</td>
                 <td>CPF</td>
                 <td>Página para adotar animais</td>
+                <td>Perfil</td>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
                 <td>${owner.name()}</td>
                 <td>${owner.cpf()}</td>
                 <td><a href="/owners/${owner.id()}/adoptions/new">Adote um animal</a></td>
+                <td><a href="/owners/${owner.id()}">Perfil</a></td>
             </tr>
         </c:forEach>
 

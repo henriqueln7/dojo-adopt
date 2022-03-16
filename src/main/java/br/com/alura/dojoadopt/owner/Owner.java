@@ -90,4 +90,12 @@ public class Owner {
     public List<Animal> getAnimals() {
         return Collections.unmodifiableList(animals);
     }
+
+    public boolean hasRemunerationOver(BigDecimal bigDecimal) {
+        return this.remuneration.compareTo(bigDecimal) >= 0;
+    }
+
+    public boolean livesIn(HomeKind homeKind) {
+        return this.homeKind.equals(homeKind);
+    }
 }

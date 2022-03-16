@@ -90,12 +90,17 @@ public class Animal {
         Assert.isNull(this.owner, "Animal já foi adotado");
         Assert.notNull(owner, "Owner é nulo grrrr");
 
+        if (!animalKind.accepts(owner)) {
+            System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+            return false;
+        }
+
         if (!owner.canSupport(this)) {
             return false;
         }
 
-        this.owner = owner;
-        this.adoptedAt = LocalDateTime.now();
+//        this.owner = owner;
+//        this.adoptedAt = LocalDateTime.now();
         return true;
     }
 }
