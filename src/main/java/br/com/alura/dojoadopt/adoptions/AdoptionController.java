@@ -1,7 +1,8 @@
-package br.com.alura.dojoadopt.owner;
+package br.com.alura.dojoadopt.adoptions;
 
 import br.com.alura.dojoadopt.animal.Animal;
 import br.com.alura.dojoadopt.animal.AnimalRepository;
+import br.com.alura.dojoadopt.owner.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -31,6 +32,7 @@ public class AdoptionController {
             redirectAttributes.addFlashAttribute("adoptError", "Puts cara você não tem grana pra sustentar o bicho!!!!");
         }
 
-        return "redirect:/owners/" + owner.getId() + "/adoptions/new";
+        redirectAttributes.addFlashAttribute("adoptSuccess", "Que coisa maravilinda! O animal " + animal.getName() + " foi adotado com sucesso");
+        return "redirect:/owners/" + owner.getId();
     }
 }

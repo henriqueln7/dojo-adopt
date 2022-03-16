@@ -75,11 +75,16 @@ public class Owner {
         return name;
     }
 
+    public BigDecimal getRemuneration() {
+        return remuneration;
+    }
+
     public boolean canSupport(Animal animal) {
-        BigDecimal moneySpentEveryMonthWithAnimals = this.animals.stream()
-                                                                 .map(Animal::getMonthlyCost)
-                                                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal moneyAvailableToAdoptNewAnimal = this.remuneration.subtract(moneySpentEveryMonthWithAnimals);
+        BigDecimal moneyAvailableToAdoptNewAnimal = this.remuneration.subtract(getMonthlyExpenses());
         return moneyAvailableToAdoptNewAnimal.compareTo(animal.getMonthlyCost()) >= 0;
+    }
+
+    public BigDecimal getMonthlyExpenses() {
+        return this.animals.stream().map(Animal::getMonthlyCost).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

@@ -64,4 +64,12 @@ public class OwnerController {
 
         return "adoptions/new";
     }
+
+    @GetMapping("/owners/{ownerId}")
+    public String ownerProfile(@PathVariable Long ownerId, Model model) {
+        Owner owner = ownerRepository.findById(ownerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        OwnerProfileView ownerProfileView = new OwnerProfileView(owner);
+        model.addAttribute("ownerProfile", ownerProfileView);
+        return "owners/profile";
+    }
 }
