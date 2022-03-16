@@ -3,9 +3,8 @@ package br.com.alura.dojoadopt.owner;
 import br.com.alura.dojoadopt.animal.Animal;
 import br.com.alura.dojoadopt.animal.AnimalRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
 
@@ -15,11 +14,6 @@ public class AdoptionController {
     private final AnimalRepository animalRepository;
     private final OwnerRepository ownerRepository;
 
-    @InitBinder("newAdoptionForm")
-    public void init(WebDataBinder binder) {
-        binder.addValidators(new NewAdoptionValidator());
-    }
-
     public AdoptionController(AnimalRepository animalRepository, OwnerRepository ownerRepository) {
         this.animalRepository = animalRepository;
         this.ownerRepository = ownerRepository;
@@ -27,11 +21,15 @@ public class AdoptionController {
 
     @PostMapping("/adoptions")
     @Transactional
-    public String newAdoption(NewAdoptionForm form) {
+    public String newAdoption(NewAdoptionForm form, RedirectAttributes redirectAttributes) {
         Animal animal = animalRepository.findById(form.animalId()).orElseThrow();
         Owner owner = ownerRepository.findById(form.ownerId()).orElseThrow();
 
-        animal.beAdoptedBy(owner);
+        boolean couldBeAdopted = animal.beAdoptedBy(owner);
+
+        if (!couldBeAdopted) {
+            redirectAttributes.addFlashAttribute("adoptError", "Puts cara você não tem grana pra sustentar o bicho!!!!");
+        }
 
         return "redirect:/owners/" + owner.getId() + "/adoptions/new";
     }

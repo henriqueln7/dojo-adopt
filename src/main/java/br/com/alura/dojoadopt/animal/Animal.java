@@ -87,12 +87,16 @@ public class Animal {
         return monthlyCost;
     }
 
-    public void beAdoptedBy(Owner owner) {
+    public boolean beAdoptedBy(Owner owner) {
         Assert.isNull(this.owner, "Animal já foi adotado");
-        Assert.isTrue(owner.canSupport(this), "O tutor não pode sustentar esse animal");
         Assert.notNull(owner, "Owner é nulo grrrr");
+
+        if (!owner.canSupport(this)) {
+            return false;
+        }
 
         this.owner = owner;
         this.adoptedAt = LocalDateTime.now();
+        return true;
     }
 }

@@ -14,6 +14,10 @@
 <body>
 <h3>Nova adoção</h3>
 
+<c:if test="${not empty adoptError}">
+    <p style="color: red">${adoptError}</p>
+</c:if>
+
 <section class="owner-information">
     <img src="${owner.photoUrl()}" width="150px" height="150px" alt="Foto do tutor ${owner.name()}" />
     <h3>Nome: ${owner.name()}</h3>
