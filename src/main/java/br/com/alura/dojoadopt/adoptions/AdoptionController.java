@@ -4,6 +4,7 @@ import br.com.alura.dojoadopt.animal.Animal;
 import br.com.alura.dojoadopt.animal.AnimalRepository;
 import br.com.alura.dojoadopt.owner.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 

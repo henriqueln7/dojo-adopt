@@ -38,7 +38,6 @@ public class Animal {
     @Nullable
     private Owner owner;
 
-    @FutureOrPresent
     @Nullable
     private LocalDateTime adoptedAt;
 

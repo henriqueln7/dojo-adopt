@@ -8,8 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static javax.persistence.EnumType.STRING;
 
@@ -86,5 +85,9 @@ public class Owner {
 
     public BigDecimal getMonthlyExpenses() {
         return this.animals.stream().map(Animal::getMonthlyCost).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public List<Animal> getAnimals() {
+        return Collections.unmodifiableList(animals);
     }
 }
