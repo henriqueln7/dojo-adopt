@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import static br.com.alura.dojoadopt.animal.AnimalKind.*;
 import static javax.persistence.EnumType.STRING;
 
 @Entity
@@ -103,4 +104,13 @@ public class Animal {
 //        this.adoptedAt = LocalDateTime.now();
         return true;
     }
+
+    public boolean isCat() {
+        return this.animalKind.equals(CAT);
+    }
+
+    public boolean isDog() {
+        return this.animalKind.equals(DOG);
+    }
+
 }

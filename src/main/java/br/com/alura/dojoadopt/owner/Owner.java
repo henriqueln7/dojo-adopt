@@ -1,6 +1,7 @@
 package br.com.alura.dojoadopt.owner;
 
 import br.com.alura.dojoadopt.animal.Animal;
+import br.com.alura.dojoadopt.animal.AnimalSize;
 import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -100,10 +101,15 @@ public class Owner {
     }
 
     public boolean hasCats() {
-        return true;
+        return this.animals.stream().anyMatch(Animal::isCat);
     }
 
     public boolean hasDogs() {
-        return false;
+        return this.animals.stream().anyMatch(Animal::isDog);
     }
+
+    public boolean hasMoreThanNDogs(int n) {
+        return this.animals.stream().filter(Animal::isDog).count() >= n;
+    }
+
 }

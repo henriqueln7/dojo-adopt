@@ -4,8 +4,7 @@ import br.com.alura.dojoadopt.owner.Owner;
 
 import java.math.BigDecimal;
 
-import static br.com.alura.dojoadopt.owner.HomeKind.FARM;
-import static br.com.alura.dojoadopt.owner.HomeKind.HOUSE_WITH_POOL;
+import static br.com.alura.dojoadopt.owner.HomeKind.*;
 
 public enum AnimalKind {
     FISH("Peixe") {
@@ -17,7 +16,6 @@ public enum AnimalKind {
     REPTILE("Réptil") {
         @Override
         public boolean accepts(Owner owner) {
-
             if (owner.livesIn(FARM)) {
                 return true;
             }
@@ -25,8 +23,21 @@ public enum AnimalKind {
             return !owner.hasCats() && !owner.hasDogs();
         }
     },
-    DOG("Cachorro"),
-    CAT("Gato"),
+    DOG("Cachorro") {
+        @Override
+        public boolean accepts(Owner owner) {
+            if (owner.livesIn(APARTMENT)) {
+                // caso a pessoa more em apartamento, só podemos ter apenas 1 cachorro (GRANDE ou GIGANTE)
+            }
+            return true;
+        }
+    },
+    CAT("Gato") {
+        @Override
+        public boolean accepts(Owner owner) {
+            return !owner.hasMoreThanNDogs(3);
+        }
+    },
     BIRD("Pássarasalto"),
     EXOTIC("Exótico") {
         @Override
