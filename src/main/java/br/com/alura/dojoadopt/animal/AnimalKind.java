@@ -19,20 +19,14 @@ public enum AnimalKind {
     REPTILE("Réptil") {
         @Override
         public boolean accepts(Owner owner) {
-            if (owner.livesIn(FARM)) {
-                return true;
-            }
+            return owner.livesIn(FARM) || (!owner.hasCats() && !owner.hasDogs());
 
-            return !owner.hasCats() && !owner.hasDogs();
         }
     },
     DOG("Cachorro") {
         @Override
         public boolean accepts(Owner owner) {
-            if (owner.livesIn(APARTMENT)) {
-                return !owner.hasDogWithSize(BIG, GIANT);
-            }
-            return true;
+            return !owner.livesIn(APARTMENT) || !owner.hasDogWithSize(BIG, GIANT);
         }
     },
     CAT("Gato") {
@@ -44,17 +38,7 @@ public enum AnimalKind {
     BIRD("Pássarasalto") {
         @Override
         public boolean accepts(Owner owner) {
-//            o nome da pessoa não pode começar com a letra "A", a pessoa precisa ter mais de 18 anos e não pode morar em apartamento.
-            if (StringUtils.startsWithIgnoreCase(owner.getName(), "A")) {
-                return false;
-            }
-            if (owner.isUnderAge()) {
-                return false;
-            }
-            if (owner.livesIn(APARTMENT)) {
-                return false;
-            }
-            return true;
+            return !StringUtils.startsWithIgnoreCase(owner.getName(), "A") && !owner.isUnderAge() && !owner.livesIn(APARTMENT);
         }
     },
     EXOTIC("Exótico") {
@@ -74,7 +58,5 @@ public enum AnimalKind {
         return displayName;
     }
 
-    public boolean accepts(Owner owner) {
-        return true;
-    }
+    public abstract boolean accepts(Owner owner);
 }

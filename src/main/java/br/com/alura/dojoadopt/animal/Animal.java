@@ -92,7 +92,6 @@ public class Animal {
         Assert.notNull(owner, "Owner é nulo grrrr");
 
         if (!animalKind.accepts(owner)) {
-            System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
             return false;
         }
 
@@ -100,8 +99,8 @@ public class Animal {
             return false;
         }
 
-//        this.owner = owner;
-//        this.adoptedAt = LocalDateTime.now();
+        this.owner = owner;
+        this.adoptedAt = LocalDateTime.now();
         return true;
     }
 

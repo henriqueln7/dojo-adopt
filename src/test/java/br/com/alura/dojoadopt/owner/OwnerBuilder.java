@@ -1,10 +1,14 @@
 package br.com.alura.dojoadopt.owner;
 
+import br.com.alura.dojoadopt.animal.Animal;
+import br.com.alura.dojoadopt.animal.AnimalBuilder;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.*;
 
 public class OwnerBuilder {
     private String name = "Novo dono";
@@ -13,6 +17,7 @@ public class OwnerBuilder {
     private BigDecimal remuneration = new BigDecimal("1000");
     private HomeKind homeKind = HomeKind.HOUSE;
     private String photoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg";
+    private final List<Animal> animals = new ArrayList<>();
 
     public OwnerBuilder withName(String name) {
         this.name = name;
@@ -44,8 +49,15 @@ public class OwnerBuilder {
         return this;
     }
 
+    public OwnerBuilder withAnimals(Animal... animals) {
+        this.animals.addAll(Arrays.stream(animals).toList());
+        return this;
+    }
+
     public Owner build() {
-        return new Owner(name, cpf, birthday, remuneration, homeKind, photoUrl);
+        Owner owner = new Owner(name, cpf, birthday, remuneration, homeKind, photoUrl);
+        ReflectionTestUtils.setField(owner, "animals", this.animals);
+        return owner;
     }
 
     public static OwnerBuilder anOwner() {
