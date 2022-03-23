@@ -98,4 +98,12 @@ public class Owner {
     public boolean livesIn(HomeKind homeKind) {
         return this.homeKind.equals(homeKind);
     }
+
+    public boolean hasCats() {
+        return true;
+    }
+
+    public boolean hasDogs() {
+        return false;
+    }
 }
