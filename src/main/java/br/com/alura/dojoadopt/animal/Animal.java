@@ -113,4 +113,7 @@ public class Animal {
         return this.animalKind.equals(DOG);
     }
 
+    public boolean hasSize(AnimalSize size) {
+        return this.animalSize.equals(size);
+    }
 }

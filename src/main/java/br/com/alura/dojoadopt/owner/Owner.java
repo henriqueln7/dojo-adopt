@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import static javax.persistence.EnumType.STRING;
@@ -44,7 +45,7 @@ public class Owner {
 
     @Deprecated
     protected Owner(){}
-    
+
     public Owner(@NotBlank @Size(max = 100) String name,
                  @NotBlank String cpf,
                  @PastOrPresent @NotNull LocalDate birthday,
@@ -112,4 +113,14 @@ public class Owner {
         return this.animals.stream().filter(Animal::isDog).count() >= n;
     }
 
+    public boolean hasDogWithSize(AnimalSize... sizes) {
+        List<AnimalSize> animalSizes = Arrays.stream(sizes).toList();
+        return this.animals.stream()
+                           .filter(Animal::isDog)
+                           .anyMatch(animal -> animalSizes.stream().anyMatch(animal::hasSize));
+    }
+
+    public boolean isUnderAge() {
+        return ChronoUnit.YEARS.between(this.birthday, LocalDate.now()) >= 18;
+    }
 }

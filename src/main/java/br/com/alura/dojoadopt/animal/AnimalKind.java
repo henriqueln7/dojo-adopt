@@ -1,9 +1,12 @@
 package br.com.alura.dojoadopt.animal;
 
 import br.com.alura.dojoadopt.owner.Owner;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 
+import static br.com.alura.dojoadopt.animal.AnimalSize.BIG;
+import static br.com.alura.dojoadopt.animal.AnimalSize.GIANT;
 import static br.com.alura.dojoadopt.owner.HomeKind.*;
 
 public enum AnimalKind {
@@ -27,7 +30,7 @@ public enum AnimalKind {
         @Override
         public boolean accepts(Owner owner) {
             if (owner.livesIn(APARTMENT)) {
-                // caso a pessoa more em apartamento, só podemos ter apenas 1 cachorro (GRANDE ou GIGANTE)
+                return !owner.hasDogWithSize(BIG, GIANT);
             }
             return true;
         }
@@ -38,7 +41,22 @@ public enum AnimalKind {
             return !owner.hasMoreThanNDogs(3);
         }
     },
-    BIRD("Pássarasalto"),
+    BIRD("Pássarasalto") {
+        @Override
+        public boolean accepts(Owner owner) {
+//            o nome da pessoa não pode começar com a letra "A", a pessoa precisa ter mais de 18 anos e não pode morar em apartamento.
+            if (StringUtils.startsWithIgnoreCase(owner.getName(), "A")) {
+                return false;
+            }
+            if (owner.isUnderAge()) {
+                return false;
+            }
+            if (owner.livesIn(APARTMENT)) {
+                return false;
+            }
+            return true;
+        }
+    },
     EXOTIC("Exótico") {
         @Override
         public boolean accepts(Owner owner) {
