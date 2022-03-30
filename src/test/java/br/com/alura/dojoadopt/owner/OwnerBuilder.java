@@ -1,11 +1,8 @@
 package br.com.alura.dojoadopt.owner;
 
 import br.com.alura.dojoadopt.animal.Animal;
-import br.com.alura.dojoadopt.animal.AnimalBuilder;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;

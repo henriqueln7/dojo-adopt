@@ -1,0 +1,24 @@
+package br.com.alura.dojoadopt.reports;
+
+import br.com.alura.dojoadopt.animal.AnimalRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class ReportsController {
+
+    @Autowired
+    private AnimalRepository animalRepository;
+
+    @GetMapping("/reports")
+    public String reports() {
+        return "reports/list";
+    }
+
+    @GetMapping("/reports/namesByKind")
+    public String namesByKind() {
+        animalRepository.namesByKind();
+        return "reports/namesByKind";
+    }
+}

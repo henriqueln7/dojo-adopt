@@ -12,7 +12,6 @@ import static br.com.alura.dojoadopt.animal.AnimalSize.*;
 import static br.com.alura.dojoadopt.owner.HomeKind.*;
 import static br.com.alura.dojoadopt.owner.OwnerBuilder.anOwner;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 
 class AnimalKindTest {
     @Nested
@@ -147,11 +146,22 @@ class AnimalKindTest {
         }
 
         @Test
-        @DisplayName("should reject owner if owner does not live in a APARTAMENT")
-        void should_reject_owner_if_owner_does_not_live_in_a_apartament() {
-            Owner owner = anOwner().withName("LOL").withBirthday(LocalDate.now().minusYears(20)).withHomeKind(HOUSE).build();
+        @DisplayName("should reject owner if owner live in a APARTAMENT")
+        void should_reject_owner_if_owner_live_in_a_apartament() {
+            Owner owner = anOwner().withHomeKind(APARTMENT).build();
 
             assertThat(BIRD.accepts(owner)).isFalse();
+        }
+
+        @Test
+        @DisplayName("should accept owner if owner does not has name starting with letter A, is overage and does not live in a APARTMENT")
+        void should_accept_owner_if_owner_does_not_has_name_starting_with_letter_a_is_overage_and_does_not_live_in_a_apartment() {
+            Owner owner = anOwner().withName("bacharel")
+                                   .withBirthday(LocalDate.now().minusYears(18))
+                                   .withHomeKind(HOUSE)
+                                   .build();
+
+            assertThat(BIRD.accepts(owner)).isTrue();
         }
     }
 
