@@ -15,10 +15,10 @@
 
 <h1>Relatórios</h1>
 
-<c:forEach items="${namesByKind.keySet()}" var="kind">
-    <p>${kind}</p>
+<c:forEach items="${namesByKind}" var="kind">
+    <p>${kind.kindDisplayName}</p>
     <ul>
-        <c:forEach items="${namesByKind.get(kind)}" var="name">
+        <c:forEach items="${kind.names}" var="name">
             <li>${name}</li>
         </c:forEach>
     </ul>
