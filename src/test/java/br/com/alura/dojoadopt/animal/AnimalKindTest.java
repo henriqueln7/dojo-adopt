@@ -3,12 +3,16 @@ package br.com.alura.dojoadopt.animal;
 import br.com.alura.dojoadopt.owner.Owner;
 import org.junit.jupiter.api.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import static br.com.alura.dojoadopt.animal.AnimalBuilder.anAnimal;
 import static br.com.alura.dojoadopt.animal.AnimalKind.*;
 import static br.com.alura.dojoadopt.animal.AnimalSize.*;
 import static br.com.alura.dojoadopt.owner.HomeKind.*;
 import static br.com.alura.dojoadopt.owner.OwnerBuilder.anOwner;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class AnimalKindTest {
     @Nested
@@ -98,6 +102,83 @@ class AnimalKindTest {
             assertThat(DOG.accepts(owner)).isFalse();
         }
 
+    }
 
+    @Nested
+    class Cat {
+        @Test
+        @DisplayName("should reject owner if owner has more 3 or more dogs")
+        void should_reject_owner_if_owner_has_more_than_3_or_more_dogs() {
+            Animal dog1 = anAnimal().withKind(DOG).build();
+            Animal dog2 = anAnimal().withKind(DOG).build();
+            Animal dog3 = anAnimal().withKind(DOG).build();
+            Owner owner = anOwner().withAnimals(dog1, dog2, dog3).build();
+
+            assertThat(CAT.accepts(owner)).isFalse();
+        }
+
+        @Test
+        @DisplayName("should accept owner if owner has less than 3 or more dogs")
+        void should_accept_owner_if_owner_has_les() {
+            Animal dog1 = anAnimal().withKind(DOG).build();
+            Animal dog2 = anAnimal().withKind(DOG).build();
+            Owner owner = anOwner().withAnimals(dog1, dog2).build();
+
+            assertThat(CAT.accepts(owner)).isTrue();
+        }
+    }
+
+    @Nested
+    class Bird {
+        @Test
+        @DisplayName("should reject owner if owner has name starting with letter A")
+        void should_reject_owner_if_owner_has_name_starting_with_letter_a() {
+            Owner owner = anOwner().withName("A").withBirthday(LocalDate.now().minusYears(20)).build();
+
+            assertThat(BIRD.accepts(owner)).isFalse();
+        }
+
+        @Test
+        @DisplayName("should reject owner if owner is underage")
+        void should_reject_owner_if_owner_is_underage() {
+            Owner owner = anOwner().withName("bacharel").withBirthday(LocalDate.now().minusYears(17)).build();
+
+            assertThat(BIRD.accepts(owner)).isFalse();
+        }
+
+        @Test
+        @DisplayName("should reject owner if owner does not live in a APARTAMENT")
+        void should_reject_owner_if_owner_does_not_live_in_a_apartament() {
+            Owner owner = anOwner().withName("LOL").withBirthday(LocalDate.now().minusYears(20)).withHomeKind(HOUSE).build();
+
+            assertThat(BIRD.accepts(owner)).isFalse();
+        }
+    }
+
+    @Nested
+    class Exotic {
+        @Test
+        @DisplayName("should reject owner if owner does not live in a FARM")
+        void should_reject_owner_if_owner_does_not_live_in_a_farm() {
+            Owner owner = anOwner().withRemuneration(new BigDecimal(50000)).withHomeKind(HOUSE).build();
+
+            assertThat(EXOTIC.accepts(owner)).isFalse();
+        }
+
+        @Test
+        @DisplayName("should reject owner if owner has remuneration below 50000")
+        void should_reject_owner_if_owner_has_remuneration_below_50000() {
+            Owner owner = anOwner().withHomeKind(FARM).withRemuneration(new BigDecimal(49999)).build();
+
+            assertThat(EXOTIC.accepts(owner)).isFalse();
+        }
+
+        @Test
+        @DisplayName("should accept owner if owner has remuneration over 50000 and lives in a FARM")
+        void should_accept_owner_if_owner_has_remuneration_over_50000_and_lives_in_a_farm() {
+            Owner owner = anOwner().withHomeKind(FARM).withRemuneration(new BigDecimal(50000)).build();
+
+            assertThat(EXOTIC.accepts(owner)).isTrue();
+        }
     }
 }

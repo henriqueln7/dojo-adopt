@@ -122,6 +122,6 @@ public class Owner {
     }
 
     public boolean isUnderAge() {
-        return ChronoUnit.YEARS.between(this.birthday, LocalDate.now()) >= 18;
+        return ChronoUnit.YEARS.between(this.birthday, LocalDate.now()) < 18;
     }
 }
