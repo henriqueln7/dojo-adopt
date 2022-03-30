@@ -14,7 +14,15 @@
 <body>
 
 <h1>Relatórios</h1>
-<a href="/reports/namesByKind">Nome dos animais por tipo</a>
+
+<c:forEach items="${namesByKind.keySet()}" var="kind">
+    <p>${kind}</p>
+    <ul>
+        <c:forEach items="${namesByKind.get(kind)}" var="name">
+            <li>${name}</li>
+        </c:forEach>
+    </ul>
+</c:forEach>
 
 </body>
 </html>
