@@ -9,6 +9,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Listagem de Animais</title>
 </head>
+<form>
+    <label>
+        <input type="search" id="search" placeholder="Pesquisar por nome do animal" style="width: 40%" />
+    </label>
+</form>
 <body>
     <table>
         <thead>
@@ -39,4 +44,16 @@
     <a href="/animals/new">Cadastrar novo animal</a>
 
 </body>
+<script>
+    document.querySelector('#search').addEventListener('keyup', (event) => {
+        const search = event.target.value;
+        document.querySelectorAll('tbody tr').forEach(row => {
+            if (row.innerText.toLowerCase().includes(search.toLowerCase())) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 </html>
