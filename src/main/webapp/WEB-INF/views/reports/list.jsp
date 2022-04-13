@@ -17,6 +17,7 @@
 <main style="display: flex; flex-direction: column">
     <a href="/reports/namesByKind">Nome dos animais por tipo</a>
     <a href="/reports/monthlyCostsByKind">Custo médio mensal dos animais por tipo</a>
+    <a href="/reports/monthlyExpensesByOwner">Gasto por dono</a>
 
 </main>
 

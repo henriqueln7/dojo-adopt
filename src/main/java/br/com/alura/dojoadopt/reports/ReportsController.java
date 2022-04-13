@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.HashMap;
+
 @Controller
 public class ReportsController {
 
@@ -27,5 +29,11 @@ public class ReportsController {
     public String monthlyCostsByKind(Model model) {
         model.addAttribute("monthlyCostsByKind", animalRepository.monthlyCostsByKind());
         return "reports/monthlyCostsByKind";
+    }
+
+    @GetMapping("/reports/monthlyExpensesByOwner")
+    public String monthlyExpensesByOwner(Model model) {
+        model.addAttribute("monthlyExpensesByOwner", animalRepository.monthlyExpensesByOwner());
+        return "reports/monthlyExpensesByOwner";
     }
 }

@@ -27,4 +27,13 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     GROUP BY a.animal_kind
 """, nativeQuery = true)
     List<MonthlyCostByKindProjection> monthlyCostsByKind();
+
+    @Query(value = """
+    SELECT o.name as ownerName, IFNULL(SUM(a.monthly_cost), 0) AS monthlyTotalExpenses
+    FROM owner o
+        LEFT JOIN animal a on a.owner_id = o.id
+    GROUP BY o.id
+    ORDER BY monthlyTotalExpenses DESC
+""", nativeQuery = true)
+    List<MonthlyExpensesByOwnerProjection> monthlyExpensesByOwner();
 }

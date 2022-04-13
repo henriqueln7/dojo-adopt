@@ -25,10 +25,10 @@ class AnimalRepositoryTest {
         @Test
         @DisplayName("should return names by kind correctly")
         void should_return_names_by_kind_correctly() {
-            Animal zezinho = save(anAnimal().withKind(REPTILE).withName("Zezinho"));
-            Animal ze = save(anAnimal().withKind(REPTILE).withName("Zé"));
-            Animal berranteiro = save(anAnimal().withKind(CAT).withName("Berranteiro"));
-            Animal matadorDeOnca = save(anAnimal().withKind(DOG).withName("Matador de onça"));
+            save(anAnimal().withKind(REPTILE).withName("Zezinho"));
+            save(anAnimal().withKind(REPTILE).withName("Zé"));
+            save(anAnimal().withKind(CAT).withName("Berranteiro"));
+            save(anAnimal().withKind(DOG).withName("Matador de onça"));
 
             assertThat(animalRepository.namesByKind()).satisfiesExactlyInAnyOrder(projection -> {
                 assertThat(projection.getAnimalKind()).isEqualTo(REPTILE);
