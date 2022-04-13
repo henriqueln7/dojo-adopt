@@ -1,5 +1,7 @@
 package br.com.alura.dojoadopt.animal;
 
+import br.com.alura.dojoadopt.owner.Owner;
+import br.com.alura.dojoadopt.owner.OwnerBuilder;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -69,6 +71,59 @@ class AnimalRepositoryTest {
             });
         }
     }
+
+    @Nested
+    class MonthlyExpensesByOwner {
+        @Test
+        @DisplayName("should return average monthly expenses by owner correctly")
+        void should_return_average_monthly_expenses_by_owner_correctly() {
+
+            Owner caio = OwnerBuilder.anOwner()
+                                     .withName("Caio")
+                                     .build();
+            Owner maria = OwnerBuilder.anOwner().withName("Maria").build();
+            Owner gabriel = OwnerBuilder.anOwner().withName("Gabriel").build();
+            Owner romulo = OwnerBuilder.anOwner().withName("Rômulo").build();
+            entityManager.persist(caio);
+            entityManager.persist(gabriel);
+            entityManager.persist(maria);
+            entityManager.persist(romulo);
+            Animal animal300 = anAnimal().withMonthlyCost(new BigDecimal(300)).build();
+            Animal animal200 = anAnimal().withMonthlyCost(new BigDecimal(200)).build();
+            Animal animal50 = anAnimal().withMonthlyCost(new BigDecimal(50)).build();
+            Animal animal100 = anAnimal().withMonthlyCost(new BigDecimal(100)).build();
+
+            entityManager.persist(animal300);
+            entityManager.persist(animal200);
+            entityManager.persist(animal50);
+            entityManager.persist(animal100);
+
+            animal50.beAdoptedBy(caio);
+            animal100.beAdoptedBy(caio);
+            animal200.beAdoptedBy(maria);
+            animal300.beAdoptedBy(gabriel);
+
+            entityManager.refresh(caio);
+            entityManager.refresh(maria);
+            entityManager.refresh(gabriel);
+            entityManager.refresh(romulo);
+
+            assertThat(animalRepository.monthlyExpensesByOwner()).satisfiesExactly(projection -> {
+                assertThat(projection.getOwnerName()).isEqualTo("Gabriel");
+                assertThat(projection.getMonthlyTotalExpenses()).isEqualByComparingTo("300.00");
+            }, projection -> {
+                assertThat(projection.getOwnerName()).isEqualTo("Maria");
+                assertThat(projection.getMonthlyTotalExpenses()).isEqualByComparingTo("200.00");
+            }, projection -> {
+                assertThat(projection.getOwnerName()).isEqualTo("Caio");
+                assertThat(projection.getMonthlyTotalExpenses()).isEqualByComparingTo("150.00");
+            }, projection -> {
+                assertThat(projection.getOwnerName()).isEqualTo("Rômulo");
+                assertThat(projection.getMonthlyTotalExpenses()).isEqualByComparingTo("0.00");
+            });
+        }
+    }
+
 
     private Animal save(AnimalBuilder animalBuilder) {
         Animal animal = animalBuilder.build();

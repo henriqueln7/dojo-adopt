@@ -9,7 +9,7 @@ import java.util.*;
 
 public class OwnerBuilder {
     private String name = "Novo dono";
-    private String cpf = "18851676011";
+    private String cpf = GeradorCPF.gerarCPF();
     private LocalDate birthday = LocalDate.of(2003, 3, 12);
     private BigDecimal remuneration = new BigDecimal("1000");
     private HomeKind homeKind = HomeKind.HOUSE;
@@ -53,11 +53,67 @@ public class OwnerBuilder {
 
     public Owner build() {
         Owner owner = new Owner(name, cpf, birthday, remuneration, homeKind, photoUrl);
-        ReflectionTestUtils.setField(owner, "animals", this.animals);
+        this.animals.forEach(animal -> animal.beAdoptedBy(owner));
         return owner;
     }
 
     public static OwnerBuilder anOwner() {
         return new OwnerBuilder();
+    }
+}
+
+// CTRL C + CTRL V daqui: https://github.com/jrjuniorsp/GeradorValidadorCPFCNPJ/blob/master/src/com/jrmobile/service/GeradorCPF.java
+class GeradorCPF {
+
+    /**
+     * Construtor private para manter o singleton
+     */
+    private GeradorCPF() {
+        //Do nothing
+    }
+
+    /**
+     * M�todo que gera um novo CPF de forma randomica
+     *
+     * @author jair
+     * @since 10/04/2012
+     *
+     * @param Boolean - true formata o valor, false n�o formata
+     * @return
+     */
+    public static String gerarCPF() {
+        StringBuilder iniciais = new StringBuilder();
+        Integer numero;
+        for (int i = 0; i < 9; i++) {
+            numero = (int) (Math.random() * 10);
+            iniciais.append(numero);
+        }
+        return iniciais + calcDigVerif(iniciais.toString());
+    }
+
+    private static String calcDigVerif(String num) {
+
+        Integer primDig, segDig;
+        int soma = 0, peso = 10;
+        for (int i = 0; i < num.length(); i++)
+            soma += Integer.parseInt(num.substring(i, i + 1)) * peso--;
+
+        if (soma % 11 == 0 | soma % 11 == 1)
+            primDig = 0;
+        else
+            primDig = 11 - (soma % 11);
+
+        soma = 0;
+        peso = 11;
+        for (int i = 0; i < num.length(); i++)
+            soma += Integer.parseInt(num.substring(i, i + 1)) * peso--;
+
+        soma += primDig * 2;
+        if (soma % 11 == 0 | soma % 11 == 1)
+            segDig = 0;
+        else
+            segDig = 11 - (soma % 11);
+
+        return primDig.toString() + segDig.toString();
     }
 }
